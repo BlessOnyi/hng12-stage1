@@ -1,5 +1,9 @@
 import math
 import httpx
+import logging
+
+
+fun_fact_cache = {}
 
 def is_prime(n: int) -> bool:
     """Check if a number is prime."""
@@ -21,15 +25,22 @@ def is_armstrong(n: int) -> bool:
     return sum(d**power for d in digits) == n
 
 
-fun_fact_cache = {}
 
 async def get_fun_fact(n: int) -> str:
     if n in fun_fact_cache:
         return fun_fact_cache[n]
+    
     url = f"http://numbersapi.com/{n}/math"
     async with httpx.AsyncClient() as client:
-        response = await client.get(url)
-        if response.status_code == 200:
+        try:
+            response = await client.get(url)
+            response.raise_for_status()  # Raises an error for bad responses (4xx, 5xx)
             fun_fact_cache[n] = response.text
             return response.text
-        return f"No fun fact available for {n}."
+        except httpx.HTTPStatusError as e:
+            logging.error(f"HTTP error for {n}: {e.response.status_code}")
+            return f"No fun fact available for {n}."
+        except httpx.RequestError as e:
+            logging.error(f"Request error for {n}: {str(e)}")
+            return f"Failed to fetch fun fact."
+

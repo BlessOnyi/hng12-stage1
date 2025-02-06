@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from .models import NumberResponse
@@ -19,9 +19,12 @@ app.add_middleware(
 @app.get("/api/classify-number", response_model=NumberResponse)
 async def classify_number(number: str):
     try:
-        number = int(number)
+        number = int(number)  # Try converting to int FIRST
     except ValueError:
-        return JSONResponse(content={"number": number, "error": True}, status_code=400)
+        return JSONResponse(content={"number": number, "error": True, "message": "Invalid input. Please provide an integer."}, status_code=400)
+
+    if number < 0:  # THEN check if it's negative
+        raise HTTPException(status_code=400, detail={"error": True, "number": number, "message": "Negative numbers are not supported."})
 
     properties = []
     if is_armstrong(number):
