@@ -31,7 +31,7 @@ FastAPI's `CORSMiddleware` is used to allow requests from all origins.
 
 
 ### Endpoint
-GET http://127.0.0.1:8000//api/classify-number?number=<int>
+GET http://127.0.0.1:8000//api/classify
 
 
 ### Request Examples:
@@ -54,7 +54,7 @@ The API returns a JSON response with HTTP status code 200 OK:
 ### Error Response (400 Bad Request):
 ```Json
 {
-  "number": "invalid_input",
+  "number": "alphabet",
   "error": true
 }
 ```
