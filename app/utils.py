@@ -20,13 +20,18 @@ def is_armstrong(n: int) -> bool:
     power = len(digits)
     return sum(d**power for d in digits) == n
 
+
 async def get_fun_fact(n: int) -> str:
     """
-    Fetch fun fact from Numbers API.
+    Fetch a mathematical fun fact from Numbers API.
     """
     url = f"http://numbersapi.com/{n}/math"
-    async with httpx.AsyncClient() as client:
-        response = await client.get(url)
-        if response.status_code == 200:
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.get(url, timeout=5)  # Set a timeout for reliability
+            response.raise_for_status()  # Ensure the response is valid
             return response.text
-        return f"No fun fact available for {n}."
+    except httpx.HTTPStatusError:
+        return f"Could not retrieve a fun fact for {n} (Invalid response)."
+    except httpx.RequestError:
+        return "Network error: Unable to fetch fun fact."
