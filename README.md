@@ -2,16 +2,16 @@
 
 ## Description
 
-TThis is a RESTful API developed as part of the HNG12 internship Stage 1 task. The API provides an endpoint that classifies a given number based on its mathematical properties and returns a fun fact about it. The API is built with FastAPI for optimal performance and includes proper CORS handling for cross-origin requests.
+This is a RESTful API developed as part of the HNG12 internship Stage 1 task. The API provides an endpoint that classifies a given number based on its mathematical properties and returns a fun fact about it. The API is built with FastAPI for optimal performance and includes proper CORS handling for cross-origin requests.
 
-Key Features:
-Classifies numbers as prime, perfect, armstrong, even, or odd
-Computes the digit sum of the given number
-Fetches a fun fact about the number from the Numbers API
-Handles input validation and provides proper error responses
-CORS support for cross-origin requests
-Fast response time (< 500ms)
-Returns responses in JSON format
+## Key Features:
+- Classifies numbers as prime, perfect, armstrong, even, or odd
+- Computes the digit sum of the given number
+- Fetches a fun fact about the number from the Numbers API
+- Handles input validation and provides proper error responses
+- CORS support for cross-origin requests
+- Fast response time (< 500ms)
+- Returns responses in JSON format
  
 
 ## Technologies Used
