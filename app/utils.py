@@ -28,7 +28,7 @@ async def get_fun_fact(n: int) -> str:
     url = f"http://numbersapi.com/{n}/math"
     try:
         async with httpx.AsyncClient() as client:
-            response = await client.get(url, timeout=5)  # Set a timeout for reliability
+            response = await client.get(url, timeout=2)  # Set a timeout for reliability
             response.raise_for_status()  # Ensure the response is valid
             return response.text
     except httpx.HTTPStatusError:
